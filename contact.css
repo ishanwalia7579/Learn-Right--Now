@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body styles */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  /* Header styles */
+  header {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+  }
+  
+  nav {
+    display: flex;
+    align-items: center; /* Center align items vertically */
+    justify-content: space-between; /* Space between logo and links */
+  }
+  
+  .logo img {
+    height: 95px;
+     /* Logo height */
+  }
+  
+  nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+  }
+  
+  nav li {
+    margin: 0 1rem;
+  }
+  
+  nav a {
+    color: #333;
+    text-decoration: none;
+  }
+  /* */
+  .contact-us-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .contact-us-container h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  
+  .contact-us-container p {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  
+  .contact-info > div {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+  }
+  
+  .contact-info img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  .contact-info a {
+    font-size: 18px;
+    color: #ff6b6b;
+    text-decoration: none;
+  }
+  
+  .illustration img {
+    max-width: 100%;
+    height: auto;
+  }
+h1{
+    color: pink;
+}  
