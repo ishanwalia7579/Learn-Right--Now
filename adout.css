@@ -1,0 +1,124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body styles */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  /* Header styles */
+  header {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+  }
+  /* nav style */
+  nav {
+    display: flex;
+    align-items: center; /* Center align items vertically */
+    justify-content: space-between; /* Space between logo and links */
+  }
+  /* logo img  */
+  .logo img {
+    height: 95px;
+     /* Logo height */
+  }
+  /* nav ul */
+  nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+  }
+  /* nav li */
+  nav li {
+    margin: 0 1rem;
+  }
+  /* nav a */
+  nav a {
+    color: #333;
+    text-decoration: none;
+  }
+  /*  */
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  /* footer section */
+  footer section {
+    flex: 1;
+    margin: 0 20px;
+  }
+  /* footer h3 */
+  footer h3 {
+    margin-top: 0;
+  }
+  /* footer a */
+  footer a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+  }
+  /*  */
+  .skills{
+    color: pink;
+  }
+  /*  */
+  .about-us {
+    padding: 40px;
+    background-color: #f8f8f8;
+    text-align: center;
+  }
+  
+  .about-us h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .about-us p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .about-us .intro,
+  .about-us .mission,
+  .about-us .curriculum,
+  .about-us .call-to-action {
+    margin-bottom: 30px;
+  }
+  
+  @media (min-width: 768px) {
+    .about-us {
+      padding: 60px;
+    }
+  
+    .about-us h1 {
+      font-size: 40px;
+    }
+  
+    .about-us p {
+      font-size: 18px;
+    }
+  }
+  /*  */
+  .skills{
+    color: pink;
+  }
+  .b{
+    color: pink;
+  }
+  .B{
+    color: purple;
+  }
