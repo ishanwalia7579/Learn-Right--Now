@@ -33,53 +33,7 @@ The following flowchart represents the page navigation for Learn-Right-Now:
 
 ## 🚀 Getting Started
 
-To set up the project locally:
 
-1.Clone the repository:
-
-```bash
-git clone https://github.com/ishanwalia7579/Learn-Right--Now.git
-```
-
-2.Navigate to the project directory:
-
-```bash
-cd Learn -Right--Now
-```
-
-3.Open index.html in your preferred web browser:
-
-```bash
-open index.html
-```
-
-🤝 Contributing
-Contributions are welcome! To contribute:
-
-1.Fork the repository.
-2.Create a new branch:
-
-```bash
-git checkout -b feature/YourFeatureName
-```
-3.Commit your changes:
-
-```bash
-git commit -m "Add YourFeatureName"
-```
-
-4.Push to the branch:
-
-```bash
-git push origin feature/YourFeatureName
-
-```
-5.Submit a pull request.
-
-📄 License
-This project is licensed under the MIT License.
-
-👤 Author
 <li>Ishan Walia</li>
 GitHub
 Portfolio
