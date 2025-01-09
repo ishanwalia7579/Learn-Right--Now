@@ -258,3 +258,17 @@ footer a {
 .skills{
   color: pink;
 }
+.cb1{
+  color: blue;
+  background-color:#2e58c1;
+  padding: 10px;
+}
+#certificateForm button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
