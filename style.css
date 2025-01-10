@@ -273,3 +273,21 @@ footer a {
   cursor: pointer;
 }
 /*  */
+@media (max-width: 768px) {
+  /* Adjust layout for tablets and phones */
+  body {
+      font-size: 16px;
+  }
+
+  .container {
+      padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Adjust layout for small phones */
+  .menu {
+      display: block;
+  }
+}
+/*  */
