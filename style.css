@@ -291,3 +291,20 @@ footer a {
   }
 }
 /*  */
+#toggle-dark-mode i {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+body.dark-mode .navbar {
+  background-color: #121212;
+}
+
+body.dark-mode .navbar a {
+  color: #ffffff;
+}
+/*  */
+body.dark-mode {
+  background-color: #121212 !important; 
+  color: #ffffff !important;
+}
