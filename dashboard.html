@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard | Learn-Right-Now</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseUrl = 'https://zwampdxzijsfqaaypzpj.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3YW1wZHh6aWpzZnFhYXlwenBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2OTQ4MTcsImV4cCI6MjA2MjI3MDgxN30.Q6zew_il6uKxUNon0AllVKZJ6-qnHYMqBRwWQZ7oa18'
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    button {
+      padding: 10px;
+      background: #dc3545;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome, <span id="user-email">User</span></h2>
+    <button onclick="logOut()">Log Out</button>
+  </div>
+
+  <script>
+    async function getUser() {
+      try {
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (error) throw error;
+        
+        if (user) {
+          document.getElementById("user-email").textContent = user.email;
+        } else {
+          window.location.href = "login.html";
+        }
+      } catch (error) {
+        console.error("Error:", error.message);
+        window.location.href = "login.html";
+      }
+    }
+
+    async function logOut() {
+      try {
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
+        
+        window.location.href = "login.html";
+      } catch (error) {
+        alert("Error logging out: " + error.message);
+      }
+    }
+
+    // Get user details when the page loads
+    getUser();
+  </script>
+</body>
+</html>

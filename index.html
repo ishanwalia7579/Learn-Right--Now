@@ -19,6 +19,8 @@
                 <li><a href="courses.html">Courses</a></li>
                 <li><a href="adout.html">About Us</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
                 <li><a href="#" id="toggle-dark-mode"><i class="fas fa-sun"></i></a></li>
             </ul>
         </nav>
@@ -52,7 +54,7 @@
               <div class="course">
                 <img src="Basic-linux.jpg" alt="Basic linux">
                 <h3> &nbsp;Basic Linux</h3>
-                <p> &nbsp;Linux is a stable, open-source operating system known for its &nbsp;flexibility,security, and performance. It’s widely used in servers, &nbsp;software development, and cybersecurity.</p>
+                <p> &nbsp;Linux is a stable, open-source operating system known for its &nbsp;flexibility,security, and performance. It's widely used in servers, &nbsp;software development, and cybersecurity.</p>
                 <div class="course-details">
                 <p>Duration: 15+ hours</p>
                 <p>Class start from: 22nd Dec 2024</p>
@@ -101,7 +103,7 @@
               <div class="course">
                 <img src="kalilinux.jpg" alt="Kali linux">
                 <h3> &nbsp;kali Linux</h3>
-                <p> &nbsp;Kali Linux is a Debian-based, open-source operating system &nbsp;designed for cybersecurity professionals. It’s widely used for &nbsp;penetration testing, ethical hacking, and digital forensics.</p>
+                <p> &nbsp;Kali Linux is a Debian-based, open-source operating system &nbsp;designed for cybersecurity professionals. It's widely used for &nbsp;penetration testing, ethical hacking, and digital forensics.</p>
                 <div class="course-details">
                 <p>Duration: 14+ hours</p>
                 <p>Class start from: 22nd Dec 2024</p>
@@ -131,7 +133,7 @@
               <div class="course">
                 <img src="kotlin.png" alt="Basic Kotlin">
                 <h3>&nbsp;Basic Kotlin</h3>
-                <p>&nbsp;Kotlin is a modern, concise programming language primarily used &nbsp;for Android app development. It’s known for its interoperability with &nbsp;Java and enhanced developer productivity.</p>
+                <p>&nbsp;Kotlin is a modern, concise programming language primarily used &nbsp;for Android app development. It's known for its interoperability with &nbsp;Java and enhanced developer productivity.</p>
                 <div class="course-details">
                   <p>Duration: 11 hours</p>
                   <p>Class start from: Starts on 22nd Dec 2024</p>
@@ -222,5 +224,80 @@
 </footer>
       </main>
 <script src="javascript.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+  const supabaseUrl = 'https://zwampdxzijsfqaaypzpj.supabase.co'
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3YW1wZHh6aWpzZnFhYXlwenBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2OTQ4MTcsImV4cCI6MjA2MjI3MDgxN30.Q6zew_il6uKxUNon0AllVKZJ6-qnHYMqBRwWQZ7oa18'
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+
+  // Check authentication status and show welcome message
+  async function checkAuth() {
+    try {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error) throw error;
+
+      if (user) {
+        // Update navigation links
+        document.querySelector('a[href="login.html"]').parentElement.style.display = 'none';
+        document.querySelector('a[href="signup.html"]').parentElement.style.display = 'none';
+        
+        // Add logout button
+        const nav = document.querySelector('nav ul');
+        const logoutLi = document.createElement('li');
+        logoutLi.innerHTML = '<a href="#" onclick="logout()">Logout</a>';
+        nav.appendChild(logoutLi);
+
+        // Check if this is a new user (first login)
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        const isNewUser = session?.user?.created_at === session?.user?.last_sign_in_at;
+
+        // Show welcome message
+        const heroContent = document.querySelector('.hero-content');
+        const welcomeMessage = document.createElement('div');
+        welcomeMessage.className = 'welcome-message';
+        welcomeMessage.innerHTML = isNewUser 
+          ? `<h2>Welcome, ${user.email}!</h2><p>We're excited to have you join our learning community!</p>`
+          : `<h2>Welcome back, ${user.email}!</h2><p>Great to see you again!</p>`;
+        heroContent.insertBefore(welcomeMessage, heroContent.firstChild);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  }
+
+  // Logout function
+  async function logout() {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      window.location.reload();
+    } catch (error) {
+      alert('Error logging out: ' + error.message);
+    }
+  }
+
+  // Check auth status when page loads
+  checkAuth();
+</script>
+<style>
+  .welcome-message {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .welcome-message h2 {
+    color: #333;
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+  }
+  .welcome-message p {
+    color: #666;
+    margin: 0;
+    font-size: 1.1em;
+  }
+</style>
 </body>
 </html>
