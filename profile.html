@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Learn-Right-Now</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #007bff;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .profile-picture:hover::after {
+            content: 'Change Photo';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h1 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .profile-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .save-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .save-btn:hover {
+            background: #0056b3;
+        }
+
+        .enrolled-courses {
+            margin-top: 40px;
+        }
+
+        .course-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .course-image {
+            width: 100px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .course-info {
+            flex: 1;
+        }
+
+        .course-info h3 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress {
+            height: 100%;
+            background: #28a745;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        #profile-picture-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="Logo.png" alt="Logo" />
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="adout.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="#" id="toggle-dark-mode"><i class="fas fa-sun"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <div class="profile-header">
+                <input type="file" id="profile-picture-input" accept="image/*">
+                <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-picture" id="profile-picture">
+                <div class="profile-info">
+                    <h1 id="user-name">Loading...</h1>
+                    <p id="user-email">Loading...</p>
+                </div>
+            </div>
+
+            <form class="profile-form" id="profile-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+
+            <div class="enrolled-courses">
+                <h2>Enrolled Courses</h2>
+                <div id="courses-container">
+                    <!-- Courses will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://zwampdxzijsfqaaypzpj.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3YW1wZHh6aWpzZnFhYXlwenBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2OTQ4MTcsImV4cCI6MjA2MjI3MDgxN30.Q6zew_il6uKxUNon0AllVKZJ6-qnHYMqBRwWQZ7oa18'
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+
+        // Check authentication
+        async function checkAuth() {
+            const { data: { user }, error } = await supabase.auth.getUser()
+            if (error || !user) {
+                window.location.href = 'login.html'
+                return
+            }
+            return user
+        }
+
+        // Load user profile
+        async function loadProfile() {
+            const user = await checkAuth()
+            if (!user) return
+
+            // Set email
+            document.getElementById('user-email').textContent = user.email
+
+            // Load profile data
+            const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single()
+
+            if (profile) {
+                document.getElementById('name').value = profile.name || ''
+                document.getElementById('phone').value = profile.phone || ''
+                document.getElementById('user-name').textContent = profile.name || 'Set your name'
+                if (profile.avatar_url) {
+                    document.getElementById('profile-picture').src = profile.avatar_url
+                }
+            }
+
+            // Load enrolled courses
+            loadEnrolledCourses(user.id)
+        }
+
+        // Load enrolled courses
+        async function loadEnrolledCourses(userId) {
+            const { data: enrollments, error } = await supabase
+                .from('enrollments')
+                .select(`
+                    *,
+                    courses (*)
+                `)
+                .eq('user_id', userId)
+
+            if (error) {
+                console.error('Error loading courses:', error)
+                return
+            }
+
+            const coursesContainer = document.getElementById('courses-container')
+            coursesContainer.innerHTML = ''
+
+            enrollments.forEach(enrollment => {
+                const course = enrollment.courses
+                const progress = enrollment.progress || 0
+
+                const courseCard = document.createElement('div')
+                courseCard.className = 'course-card'
+                courseCard.innerHTML = `
+                    <img src="${course.image_url || 'https://via.placeholder.com/100x60'}" alt="${course.title}" class="course-image">
+                    <div class="course-info">
+                        <h3>${course.title}</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: ${progress}%"></div>
+                        </div>
+                        <p>Progress: ${progress}%</p>
+                    </div>
+                `
+                coursesContainer.appendChild(courseCard)
+            })
+        }
+
+        // Handle profile picture upload
+        document.getElementById('profile-picture').addEventListener('click', () => {
+            document.getElementById('profile-picture-input').click()
+        })
+
+        document.getElementById('profile-picture-input').addEventListener('change', async (e) => {
+            const file = e.target.files[0]
+            if (!file) return
+
+            const user = await checkAuth()
+            if (!user) return
+
+            // Upload image to Supabase Storage
+            const fileExt = file.name.split('.').pop()
+            const fileName = `${user.id}-${Math.random()}.${fileExt}`
+            const { error: uploadError } = await supabase.storage
+                .from('avatars')
+                .upload(fileName, file)
+
+            if (uploadError) {
+                alert('Error uploading image: ' + uploadError.message)
+                return
+            }
+
+            // Get public URL
+            const { data: { publicUrl } } = supabase.storage
+                .from('avatars')
+                .getPublicUrl(fileName)
+
+            // Update profile
+            const { error: updateError } = await supabase
+                .from('profiles')
+                .upsert({
+                    id: user.id,
+                    avatar_url: publicUrl
+                })
+
+            if (updateError) {
+                alert('Error updating profile: ' + updateError.message)
+                return
+            }
+
+            // Update image on page
+            document.getElementById('profile-picture').src = publicUrl
+        })
+
+        // Handle profile form submission
+        document.getElementById('profile-form').addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const user = await checkAuth()
+            if (!user) return
+
+            const name = document.getElementById('name').value
+            const phone = document.getElementById('phone').value
+
+            const { error } = await supabase
+                .from('profiles')
+                .upsert({
+                    id: user.id,
+                    name,
+                    phone
+                })
+
+            if (error) {
+                alert('Error updating profile: ' + error.message)
+                return
+            }
+
+            document.getElementById('user-name').textContent = name
+            alert('Profile updated successfully!')
+        })
+
+        // Load profile when page loads
+        loadProfile()
+    </script>
+</body>
+</html> 
