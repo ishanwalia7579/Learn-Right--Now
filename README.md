@@ -19,7 +19,10 @@ Welcome to **Learn-Right-Now** – a free learning platform that provides coding
 
 ## 📸 Screenshot
 
-![Screenshot](screenshot.png) *(Add your screenshot image in repo with name "screenshot.png")*
+![Screenshot](learn1.png)
+![Screenshot](learn2.png)
+![Screenshot](learn3.png)
+![Screenshot](learn4.png)*(Add your screenshot image in repo with name "screenshot.png")*
 
 ## 🛠️ Tech Stack
 
